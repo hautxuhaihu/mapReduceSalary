@@ -33,6 +33,7 @@ public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWr
             //在处理规范化薪资的时候，生成空行，在要判断
             if(!line.equals("")){
                 line = DataOperator.handleJob(line);
+                line = DataOperator.handleExperience(line);
                 context.write(new Text(line),NullWritable.get());
             }
         }

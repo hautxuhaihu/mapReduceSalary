@@ -185,24 +185,37 @@ public class DataOperator {
         return salaryInfo;
     }
 
-    public static void handleExperience(String salaryInfo){
+    public static String handleExperience(String salaryInfo){
         String[] splitInfo = salaryInfo.split(",");
         String experience = splitInfo[2];
-        double num;
+        double num = 0;
         if (experience.contains("以上")){
             num = Double.parseDouble(findNum(experience));
         }else if (experience.contains("以下")){
             num = Double.parseDouble(findNum(experience));
         }else {
-            String firstStr = experience.split("-")[0];
-            String secondStr = experience.split("-")[1];
-            double minNum = Double.parseDouble(findNum(firstStr));
-            double maxNum = Double.parseDouble(findNum(secondStr));
-            num = 0.5*(minNum+maxNum);
+            String[] splitExp = experience.split("-");
+            if(splitExp.length == 2){
+                String firstStr = experience.split("-")[0];
+                String secondStr = experience.split("-")[1];
+                double minNum = Double.parseDouble(findNum(firstStr));
+                double maxNum = Double.parseDouble(findNum(secondStr));
+                num = 0.5*(minNum+maxNum);
+            }else if(splitExp.length == 1){
+                 num = Double.parseDouble(findNum(experience));
+            }
         }
-
-        if ()
-
+        if (num>=0&&num<3){
+            splitInfo[2] =  "0-3年";
+        }else if(num>=3&&num<5){
+            splitInfo[2] =  "3-5年";
+        }else if(num>=5&&num<10){
+            splitInfo[2] =  "5-10年";
+        }else {
+            splitInfo[2] =  "10年以上";
+        }
+        salaryInfo = splitInfo[0]+","+splitInfo[1]+","+splitInfo[2]+","+splitInfo[3]+","+splitInfo[4]+","+splitInfo[5];
+        return salaryInfo;
     }
 
     public static String findNum(String string){
