@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SalaryOperator {
+public class DataOperator {
     //因为相同职位不同企业工资可能不同，所以定义{"公司名"：{"岗位":[企业1薪资，企业2薪资...]}}
     public static HashMap<String,HashMap<String,ArrayList<String>>> changeDataType(List<String> InfoList){
         /*
@@ -103,12 +103,11 @@ public class SalaryOperator {
          * */
         String salary="";
         String[] numStr;
-        boolean isNormal = true;
         String[] splitInfo =salaryInfo.split(",");
         salary = splitInfo[3];
         if (salary.contains("千") || salary.contains("K") || salary.contains("+")
                 || salary.contains("以") || salary.contains("天") || salary.contains("k")) {
-            isNormal = false;
+            return "";//不正常，程序直接返回空字符串，不继续执行
         }
         else{
             if(salary.contains("万/月")){
@@ -126,7 +125,7 @@ public class SalaryOperator {
                 }else if (numStr.length==1){
                     salary = String.valueOf(Double.parseDouble(numStr[0])*1000);
                 }else {
-                   isNormal = false;
+                    return "";
                 }
             }else{
                 salary = salary.replace("元","");
@@ -147,7 +146,7 @@ public class SalaryOperator {
                 }else if (numStr.length==1){
                     salary = numStr[0];
                 }else {
-                   isNormal = false;
+                    return "";
                 }
                 double avgNum = Double.parseDouble(salary);
                 if(avgNum<60){
@@ -158,11 +157,7 @@ public class SalaryOperator {
             }
             salaryInfo = splitInfo[0]+","+splitInfo[1]+","+splitInfo[2]+","+salary+","+splitInfo[4]+","+splitInfo[5];
         }
-        // 如果正常则返回正常的字符串，不正常返回空字符串
-        if (isNormal){
-            return salaryInfo;
-        }else {
-            return "";
-        }
+        // 正常则返回正常的字符串
+        return salaryInfo;
     }
 }

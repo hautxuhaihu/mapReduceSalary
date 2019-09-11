@@ -2,7 +2,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWr
             }
         }
         if(!handledRow.equals("")){
-            String line = SalaryOperator.countAvgSalary(handledRow);
+            String line = DataOperator.countAvgSalary(handledRow);
             context.write(new Text(line),NullWritable.get());
         }
     }
