@@ -29,8 +29,12 @@ public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWr
             }
         }
         if(!handledRow.equals("")){
-            String line = DataOperator.countAvgSalary(handledRow);
-            context.write(new Text(line),NullWritable.get());
+            String line = DataOperator.handleSalary(handledRow);
+            //在处理规范化薪资的时候，生成空行，在要判断
+            if(!line.equals("")){
+                line = DataOperator.handleJob(line);
+                context.write(new Text(line),NullWritable.get());
+            }
         }
     }
 }

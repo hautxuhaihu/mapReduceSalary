@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataOperator {
     //因为相同职位不同企业工资可能不同，所以定义{"公司名"：{"岗位":[企业1薪资，企业2薪资...]}}
@@ -95,7 +97,7 @@ public class DataOperator {
         return salary;
     }
 
-    public static String countAvgSalary(String salaryInfo){
+    public static String handleSalary(String salaryInfo){
         /*
          * 本函数是分析薪资的算法，关系整个薪资的正确性
          * @param infoList:这是我们第一题处理后的数据
@@ -159,5 +161,61 @@ public class DataOperator {
         }
         // 正常则返回正常的字符串
         return salaryInfo;
+    }
+
+    public static String handleJob(String salaryInfo){
+        String[] splitInfo = salaryInfo.split(",");
+        String job = splitInfo[0];
+        if(job.contains("大数据")){
+            job = "大数据工程师";
+        }else if(job.contains("JAVA")){
+            job = "JAVA工程师";
+        }else if(job.contains("Python")){
+            job = "Python工程师";
+        }else if (job.contains("数据库")){
+            job = "数据库管理员";
+        }else if(job.contains("开发")){
+            job = "开发工程师";
+        }else if(job.contains("数据")){
+            job = "数据工程师";
+        }else {
+            job = "其他工程师";
+        }
+        salaryInfo = job+","+splitInfo[1]+","+splitInfo[2]+","+splitInfo[3]+","+splitInfo[4]+","+splitInfo[5];
+        return salaryInfo;
+    }
+
+    public static void handleExperience(String salaryInfo){
+        String[] splitInfo = salaryInfo.split(",");
+        String experience = splitInfo[2];
+        double num;
+        if (experience.contains("以上")){
+            num = Double.parseDouble(findNum(experience));
+        }else if (experience.contains("以下")){
+            num = Double.parseDouble(findNum(experience));
+        }else {
+            String firstStr = experience.split("-")[0];
+            String secondStr = experience.split("-")[1];
+            double minNum = Double.parseDouble(findNum(firstStr));
+            double maxNum = Double.parseDouble(findNum(secondStr));
+            num = 0.5*(minNum+maxNum);
+        }
+
+        if ()
+
+    }
+
+    public static String findNum(String string){
+        /*
+        从字符串中找数字，数字以String类型返回
+         */
+        String pattern = "\\d+";
+        Pattern r = Pattern.compile(pattern);
+        Matcher matcher = r.matcher(string);
+        if(matcher.find()){
+            return matcher.group();
+        }else {
+            return "";
+        }
     }
 }
