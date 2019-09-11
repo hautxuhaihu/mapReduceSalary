@@ -15,7 +15,7 @@ public class HDFSAPI {
             fileSystem.mkdirs(path);
             System.out.println("创建成功");
         }
-        fileSystem.copyFromLocalFile(new Path("D:\\test.txt"),path);
+        fileSystem.copyFromLocalFile(new Path("D:\\salaryall.txt"),path);
 //        fileSystem.copyToLocalFile(new Path("/hdfsdemo2/aa.txt"),new Path("E:\\test\\5.txt"));
     }
 }
