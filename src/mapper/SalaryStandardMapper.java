@@ -1,7 +1,10 @@
+package mapper;
+
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +37,9 @@ public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWr
             if(!line.equals("")){
                 line = DataOperator.handleJob(line);
                 line = DataOperator.handleExperience(line);
-                context.write(new Text(line),NullWritable.get());
+                if(!line.equals("")){
+                    context.write(new Text(line),NullWritable.get());//传给reducer
+                }
             }
         }
     }
