@@ -201,8 +201,8 @@ public class DataOperator {
                 double minNum = Double.parseDouble(findNum(firstStr));
                 double maxNum = Double.parseDouble(findNum(secondStr));
                 num = 0.5*(minNum+maxNum);
-            }else if(splitExp.length == 1){
-                 num = Double.parseDouble(findNum(experience));
+            }else {
+                return "";
             }
         }
         if (num>=0&&num<3){
