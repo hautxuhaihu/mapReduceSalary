@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class CountEveryCityAvgDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        Path input = new Path("/results/result2/part-r-00000");
+        Path input = new Path("/results/result1-5/part-r-00000");
         Path output = new Path("/results/result8");
 
         Configuration configuration = new Configuration();
