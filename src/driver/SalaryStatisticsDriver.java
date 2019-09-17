@@ -1,22 +1,22 @@
 package driver;
 
-import mapper.SalaryStandardMapper;
+import mapper.SalaryStatisticsMapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import reducer.SalaryStandardReducer;
+import partitioner.SalaryPartitioner;
+import reducer.SalaryStatisticsReducer;
 
 import java.io.IOException;
 
-public class SalaryStandardDriver {
+public class SalaryStatisticsDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        Path input = new Path("/data/salaryall.txt");
-        Path output = new Path("/results/result1-5");
+        Path input = new Path("/results/result2/part-r-00000");
+        Path output = new Path("/results/result9");
 
         Configuration configuration = new Configuration();
         configuration.set("fs.defaultFS","hdfs://192.168.43.128:9000");
@@ -26,16 +26,16 @@ public class SalaryStandardDriver {
         if(fileSystem.exists(output)){
             fileSystem.delete(output,true);
         }
-        job.setJarByClass(SalaryStandardDriver.class);
-        job.setMapperClass(SalaryStandardMapper.class);
-        job.setReducerClass(SalaryStandardReducer.class);
-//        job.setPartitionerClass(SalaryPartitioner.class);
-        job.setNumReduceTasks(1);
+        job.setJarByClass(SalaryStatisticsDriver.class);
+        job.setMapperClass(SalaryStatisticsMapper.class);
+        job.setReducerClass(SalaryStatisticsReducer.class);
+        job.setPartitionerClass(SalaryPartitioner.class);
+        job.setNumReduceTasks(3);
 
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(NullWritable.class);
+        job.setMapOutputValueClass(Text.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(NullWritable.class);
+        job.setOutputValueClass(Text.class);
 
         FileInputFormat.setInputPaths(job,input);
         FileOutputFormat.setOutputPath(job, output);
