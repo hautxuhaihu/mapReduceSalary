@@ -10,10 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWritable> {
-    /*
-     * 按行读入数据，并在这里进行数据的拆分
-     */
-
     /**
      * 按行读入数据，并在这里进行数据的拆分
      * @param key mapper的默认key，不需要管，参数就这样设置
