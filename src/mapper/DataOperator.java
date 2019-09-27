@@ -1,19 +1,16 @@
 package mapper;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataOperator {
-
+    /**
+     *  本函数是分析薪资的算法，关系整个薪资的正确性
+     * @param salaryInfo 这是我们第一题处理后的数据
+     * @return 不改变数据类型，将平均薪资加到原字符串末尾，原+“，”+平均薪资
+     */
     public static String handleSalary(String salaryInfo){
-        /*
-         * 本函数是分析薪资的算法，关系整个薪资的正确性
-         * @param infoList:这是我们第一题处理后的数据
-         * @return：不改变数据类型，将平均薪资加到原字符串末尾，原+“，”+平均薪资
-         * */
         String salary="";
         String[] numStr;
         String[] splitInfo =salaryInfo.split(",");
@@ -75,12 +72,12 @@ public class DataOperator {
         return salaryInfo;
     }
 
+    /**
+     *  规范化岗位列，并且简单的抽取几种岗位的信息
+     * @param salaryInfo 一行薪资信息
+     * @return 将参数中的岗位信息替换掉后返回信息
+     */
     public static String handleJob(String salaryInfo){
-        /*
-        规范化岗位列
-        @param salaryInfo:一行信息
-        @return：将参数中的岗位信息替换掉后返回信息
-         */
         String[] splitInfo = salaryInfo.split(",");
         String job = splitInfo[0];
         if(job.contains("大数据")){
@@ -102,12 +99,12 @@ public class DataOperator {
         return salaryInfo;
     }
 
+    /**
+     * 规范化经验列。
+     * @param salaryInfo 一行薪资信息
+     * @return 正常情况下将参数中的经验列修改后再返回字符串（字符串是一行薪资信息）。如果数据有问题返回“”。
+     */
     public static String handleExperience(String salaryInfo){
-        /*
-        规范化经验列。
-        @param salaryInfo :一行信息
-        @return :正常情况下将参数中的经验列修改后再返回（一行信息）。如果数据有问题返回“”。
-         */
         String[] splitInfo = salaryInfo.split(",");
         String experience = splitInfo[2];
         double num = 0;
@@ -140,11 +137,13 @@ public class DataOperator {
         return salaryInfo;
     }
 
+    /**
+     * 从字符串中找数字，数字以String类型返回
+     * @param string 待检查的字符串
+     * @return 返回数字
+     */
     public static String findNum(String string){
-        /*
-        从字符串中找数字，数字以String类型返回
-         */
-        String pattern = "\\d+";
+        String pattern = "\\d+";//正则表达式
         Pattern r = Pattern.compile(pattern);
         Matcher matcher = r.matcher(string);
         if(matcher.find()){

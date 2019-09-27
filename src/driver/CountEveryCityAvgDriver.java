@@ -14,11 +14,12 @@ import java.io.IOException;
 
 public class CountEveryCityAvgDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        //hadoop的输入输出路径
         Path input = new Path("/results/result1-5/part-r-00000");
         Path output = new Path("/results/result8");
 
         Configuration configuration = new Configuration();
-        configuration.set("fs.defaultFS","hdfs://192.168.43.128:9000");
+        configuration.set("fs.defaultFS","hdfs://192.168.43.128:9000");//hadoop主机的地址
         Job job = Job.getInstance(configuration);
 
         FileSystem fileSystem = FileSystem.get(configuration);
@@ -31,6 +32,7 @@ public class CountEveryCityAvgDriver {
 //        job.setPartitionerClass(SalaryPartitioner.class);
         job.setNumReduceTasks(1);
 
+        //设置mapper的输出格式和reducer的输出格式
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
         job.setOutputKeyClass(Text.class);

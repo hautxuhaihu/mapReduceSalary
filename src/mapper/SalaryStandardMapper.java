@@ -4,19 +4,24 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SalaryStandardMapper extends Mapper<LongWritable, Text,Text, NullWritable> {
+    /*
+     * 按行读入数据，并在这里进行数据的拆分
+     */
+
+    /**
+     * 按行读入数据，并在这里进行数据的拆分
+     * @param key mapper的默认key，不需要管，参数就这样设置
+     * @param value mapper的默认value，不需要管，存放薪资信息
+     * @param context 上下文，将处理好的数据传递给partitioner或reducer
+     */
     @Override
     protected void map(LongWritable key, Text value,Context context) throws IOException, InterruptedException{
-        /*
-         * 按行读入数据，并在这里进行数据的拆分
-         */
         String handledRow = "";
         String[] splitInfo = value.toString().split(",");//对一行数据进行拆分
 

@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class SalaryStatisticsDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        //hadoop的输入输出路径
         Path input = new Path("/results/result1-5/part-r-00000");
         Path output = new Path("/results/result9");
 
@@ -32,6 +33,7 @@ public class SalaryStatisticsDriver {
         job.setPartitionerClass(SalaryPartitioner.class);
         job.setNumReduceTasks(3);
 
+        //设置mapper的输出格式和reducer的输出格式
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
         job.setOutputKeyClass(Text.class);
